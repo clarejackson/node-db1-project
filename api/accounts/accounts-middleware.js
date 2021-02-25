@@ -34,13 +34,23 @@ exports.checkAccountPayload = () => {
 
 exports.checkAccountNameUnique = async (req, res, next) => {
   // DO YOUR MAGIC
-  try {
-    const 
-  } catch (err) {
-    next(err)
-  }
+ 
+  
 }
 
 exports.checkAccountId = async (req, res, next) => {
   // DO YOUR MAGIC
+  try {
+    const account = await accounts.getById(req.params.id)
+    if (account) {
+      req.account = account
+      next()
+    } else {
+      res.status(404).json({
+        message: "account not found",
+      })
+    }
+  } catch (err) {
+    next(err)
+  }
 }
