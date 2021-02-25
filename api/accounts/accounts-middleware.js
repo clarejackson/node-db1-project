@@ -7,34 +7,58 @@ exports.checkAccountPayload = () => {
       return res.status(400).json({
         message: "name and budget are required"
       })
-    }
+    } else {
     if (typeof req.body.name !== "string") {
       return res.status(400).json({
         message: "name of account must be a string"
       })
     }
-    if (100 < ((req.body.name).trim) < 3) {
+    else if (100 < ((req.body.name).trim()) || ((req.body.name).trim()) < 3) {
       return res.status(400).json({
         message: "name of account must be between 3 and 100"
       })
     }
-    if (isNaN(req.body.budget)) {
+    else if (typeof req.body.budget !== "number") {
       return res.status(400).json({
         message: "budget of account must be a number"
       })
     }
-    if (1000000 < (req.body.budget) < 0) {
+    else if (1000000 < (req.body.budget) || (req.body.budget) < 0) {
       return res.status(400).json({
         message: "budget of account is too large or too small"
       })
+    } else {
+      next()
     }
-    next()
+  } 
   }
 }
 
 exports.checkAccountNameUnique = async (req, res, next) => {
   // DO YOUR MAGIC
- 
+ try {
+  let dbAccounts = await accounts.getAll()
+  // console.log(dbAccounts[0])
+  const name = (req.body.name).trim()
+  
+  dbAccounts = dbAccounts.filter((accountName) => {
+    // if (name === accountName.name) {
+    //   return accountName
+    // }
+    return name === accountName.name
+  })
+    console.log(dbAccounts)
+
+  if (dbAccounts.length >= 1) {
+    res.status(400).json({
+      message: "that name is taken",
+    })
+  } else {
+  next()
+  }
+ } catch (err) {
+   next(err)
+ }
   
 }
 
