@@ -39,7 +39,7 @@ const updateById = async (id, account) => {
   });
 
   const updatedAcct = await db('accounts')
-  .where("id", id)
+  .where("id", account.id)
   .first()
 
   return updatedAcct

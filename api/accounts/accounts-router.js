@@ -6,7 +6,7 @@ const { checkAccountPayload, checkAccountId, checkAccountNameUnique } = require(
 router.get('/', async (req, res, next) => {
   // DO YOUR MAGIC
   try {
-    const account = await accounts.getAll
+    const account = await accounts.getAll()
     res.status(200).json(account)
   } catch (err) {
     next (err)
@@ -25,7 +25,7 @@ router.get('/:id', checkAccountId, (req, res, next) => {
 router.post('/', checkAccountNameUnique,  checkAccountPayload(), (req, res, next) => {
   // DO YOUR MAGIC
   try {
-    const newAcct = accounts.create(res.account)
+    const newAcct = accounts.create(res.body)
     res.status(201).json(newAcct)
   } catch (err) {
     next (err)
