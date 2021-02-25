@@ -9,21 +9,30 @@ const getById = id => {
   // DO YOUR MAGIC
   return db('accounts')
   .where({ id })
-  .first()
+  .first();
 }
 
 const create = async account => {
   // DO YOUR MAGIC
   return db('accounts')
   .insert(account)
+  .then(ids => {
+    return getById(ids[0]);
+  });
 }
 
 const updateById = async (id, account) => {
   // DO YOUR MAGIC
+  return db('accounts')
+  .where({ id })
+  .update(account);
 }
 
 const deleteById = async id => {
   // DO YOUR MAGIC
+  return db('users')
+  .where('id', id)
+  .del();
 }
 
 module.exports = {
