@@ -1,5 +1,7 @@
 const router = require('express').Router()
 
+const accounts = require('./accounts-model')
+
 router.get('/', async (req, res, next) => {
   // DO YOUR MAGIC
 })
