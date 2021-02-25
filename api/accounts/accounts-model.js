@@ -2,35 +2,52 @@ const db = require('../../data/db-config')
 
 const getAll = () => {
   // DO YOUR MAGIC
-  return db('accounts');
+  return db.select("*").from('accounts');
 }
 
 const getById = id => {
   // DO YOUR MAGIC
-  return db('accounts')
-  .where({ id })
-  .first();
+  return db.select("*")
+  .from('accounts')
+  .where("id", id)
+  .limit(1)
 }
 
 const create = async account => {
   // DO YOUR MAGIC
-  return db('accounts')
-  .insert(account)
-  .then(ids => {
-    return getById(ids[0]);
-  });
+  const [id] = await db
+  .insert({
+    name: account.name,
+    budget: account.budget,
+  })
+  .into('accounts')
+
+  const newAcct = await db('accounts')
+  .where("id", id)
+  .first()
+
+  return newAcct
 }
 
 const updateById = async (id, account) => {
   // DO YOUR MAGIC
-  return db('accounts')
-  .where({ id })
-  .update(account);
+  await db('accounts')
+  .where("id", id)
+  .update({
+    name: account.name,
+    budget: account.budget 
+  });
+
+  const updatedAcct = await db('accounts')
+  .where("id", id)
+  .first()
+
+  return updatedAcct
 }
 
 const deleteById = async id => {
   // DO YOUR MAGIC
-  return db('users')
+  return await db('accounts')
   .where('id', id)
   .del();
 }

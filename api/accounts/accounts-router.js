@@ -1,6 +1,7 @@
 const router = require('express').Router()
 
 const accounts = require('./accounts-model')
+const { checkAccountPayload } = require('../accounts/accounts-middleware')
 
 router.get('/', async (req, res, next) => {
   // DO YOUR MAGIC

@@ -1,3 +1,5 @@
+const accounts = require("../accounts/accounts-model")
+
 exports.checkAccountPayload = () => {
   // DO YOUR MAGIC
   return (req, res, next) => {
@@ -32,6 +34,11 @@ exports.checkAccountPayload = () => {
 
 exports.checkAccountNameUnique = async (req, res, next) => {
   // DO YOUR MAGIC
+  try {
+    const 
+  } catch (err) {
+    next(err)
+  }
 }
 
 exports.checkAccountId = async (req, res, next) => {
